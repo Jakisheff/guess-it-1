@@ -1,15 +1,15 @@
-# Guess-It-1
+# Guess-It 1
 
 A competitive number guessing AI that predicts ranges for sequence continuation.
 
-## Student Solution
+## 🚀 Student Solution
 
 The solution in `student/solution.go` implements an **adaptive statistical approach** designed to handle diverse data distributions (from small ranges like [100,200] to massive ranges like [-1B, +1B]).
 
-### Algorithm Stratgey
+### Algorithm Strategy
 
-1.  **Sliding Window**: Uses a window of the last **50** values to adapt quickly to changing data trends and forget old outliers.
-2.  **Trimmed Percentiles**: Removes the top and bottom 10% of data in the window to filter out extreme outliers before calculating spread.
+1.  **Sliding Window**: Uses a window of the last **50** values to adapt quickly to data trends and forget old outliers.
+2.  **Trimmed Percentiles**: Removes the top and bottom 10% of data in the window to filter out extreme outliers.
 3.  **Adaptive Range**: Calculates the range using **Median ± 1.5 × IQR** (Interquartile Range) of the trimmed data.
 4.  **Safety Floor**: Ensures the predicted range is never too narrow (minimum 5% of observed spread).
 
@@ -25,56 +25,54 @@ The solution achieves consistent high scores across all test datasets:
 
 ---
 
-## Usage
+## 🛠️ How to Run
 
-You will first need copy the `student/` folder (provided by the student) in
-which you will see the student guessing program along with a file called
-`script.sh`. This file should be an executable shell script that runs the
-student program if you are in the root folder `guess-it/`. The filesystem
-should look somethings like this:
+### 1. Start the Tester
 
-```console
-─ guess-it/
-├── ai/
-│   ├── big-range
-│   └── ...
-├── index.html
-├── index.js
-└── ...
-└── student/
-    ├── ...
-    └── script.sh
+Open a terminal in the project folder and run:
 
-```
-
-To test the student program, these commands should be ran to have the
-dependencies needed and to start the webpage on the port 3000:
-
-```console
+```bash
 docker compose up --build
 ```
 
-After opening your browser of preference in the port
-[3000](http://localhost:3000/), if you try clicking on any of the `Test Data`
-buttons, you will notice that in the Dev Tool/ Console there is a message which
-tells you that you need another guesser besides the student.
+### 2. Open the Interface
 
-Adding a guesser is simple. You need to add in the URL a guesser, in other
-words, the name of one of the files present in the `ai/` folder:
+Go to [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 3. Choose an AI Opponent
+
+You must add a `?guesser=NAME` parameter to the URL to select which AI opponent to compete against.
+
+**Click the links below to test directly:**
+
+| AI Opponent | Difficulty | Link |
+| :--- | :--- | :--- |
+| **Big Range** | Standard | [Test vs Big Range](http://localhost:3000/?guesser=big-range) |
+| **Average** | Basic | [Test vs Average](http://localhost:3000/?guesser=average) |
+| **Median** | Solid | [Test vs Median](http://localhost:3000/?guesser=median) |
+| **Nic** | Bonus | [Test vs Nic](http://localhost:3000/?guesser=nic) |
+| **Linear Regr** | Advanced | [Test vs Linear Regression](http://localhost:3000/?guesser=linear-regr) |
+| **MSE** | Metric | [Test vs MSE](http://localhost:3000/?guesser=mse) |
+
+### 4. Run the Test
+
+1.  Click **"Test Data 1"** (or 2, 3...)
+2.  Click **"Quick"** to skip the animation and see the final result.
+3.  Click **"Clean"** before running another test.
+
+---
+
+## 📂 Project Structure
 
 ```console
-?guesser=<name_of_guesser>
+guess-it/
+├── ai/                 # AI opponents (binaries)
+├── data_sets/          # Test data (1-9)
+├── student/
+│   ├── solution.go     # The logic (THIS IS THE SOLUTION)
+│   └── script.sh       # Script to run the solution
+├── index.html          # Web interface
+├── server.js           # Backend tester
+├── Dockerfile          # Environment setup
+└── README.md           # This file
 ```
-
-For example:
-
-```console
-?guesser=big-range
-```
-
-After that, choose which of the random data set to test. After that you can
-wait for the program to test all of the values (boooooring), or you can click
-`Quick` to skip the waiting and be presented with the results.
-
-Since the website uses big data sets, we advise you to clear the displays
-clicking on the `Clean` button after each test.
